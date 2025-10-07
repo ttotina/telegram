@@ -1,0 +1,8 @@
+telethon
+deep-translator
+langdetect
+aiohttp
+requests
+aiohttp_jinja2
+psycopg2-binary
+python-dotenv
