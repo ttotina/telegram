@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Userbot</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f0f2f5; }
+        .container { max-width: 900px; }
+        .card-header { font-weight: 500; }
+    </style>
+</head>
+<body>
+    <div class="container mt-5 mb-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1>Bot Settings</h1>
+            <div>
+                <a href="/" class="btn btn-secondary">Back to Dashboard</a>
+                <a href="/keywords" class="btn btn-primary">Keyword Manager</a>
+            </div>
+        </div>
+
+        <form action="/settings" method="post">
+            <div class="card">
+                <div class="card-body">
+                    <!-- General Settings -->
+                    <h5 class="card-title">General Settings</h5>
+                    <div class="mb-4">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" id="flow_enabled" name="flow_enabled" value="true" {{ 'checked' if settings.flow_enabled == 'true' else '' }}>
+                            <label class="form-check-label" for="flow_enabled">Enable Step 0-2 Introduction Flow</label>
+                        </div>
+                        <div class="form-text">If enabled, the bot will send the initial sequence of messages to new users.</div>
+                    </div>
+                    <div class="mb-4">
+                        <h6>Media Sending Interval</h6>
+                        <p class="form-text mb-2">After Step 2, send media after a random number of messages within this range.</p>
+                        <div class="row">
+                            <div class="col">
+                                <label for="media_interval_min">Min Msgs</label>
+                                <input type="number" class="form-control" id="media_interval_min" name="media_interval_min" value="{{ settings.media_interval_min }}" min="1" required>
+                            </div>
+                            <div class="col">
+                                <label for="media_interval_max">Max Msgs</label>
+                                <input type="number" class="form-control" id="media_interval_max" name="media_interval_max" value="{{ settings.media_interval_max }}" min="1" required>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+
+                    <!-- Flow Messages -->
+                    <h5 class="card-title mt-4">Flow Messages</h5>
+                    <p class="form-text">Customize the messages for the introduction flow. Use one message per line for random selection. Use `{my_name}` and `{user_name}` where needed.</p>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="step0_msgs_1" class="form-label">Step 0 - First Message(s)</label>
+                            <textarea class="form-control" name="step0_msgs_1" rows="4">{{ settings.step0_msgs_1 }}</textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="step0_msgs_2" class="form-label">Step 0 - Second Message(s)</label>
+                            <textarea class="form-control" name="step0_msgs_2" rows="4">{{ settings.step0_msgs_2 }}</textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="step1_msgs" class="form-label">Step 1 - Tease Message(s)</label>
+                            <textarea class="form-control" name="step1_msgs" rows="4">{{ settings.step1_msgs }}</textarea>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="step2_msg" class="form-label">Step 2 - Link Message(s)</label>
+                            <textarea class="form-control" name="step2_msg" rows="4">{{ settings.step2_msg }}</textarea>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- Fallback Messages -->
+                    <h5 class="card-title mt-4">Fallback Messages</h5>
+                    <p class="form-text">Customize the messages sent when no keyword is matched. One message per line for random selection.</p>
+                    <div class="mb-3">
+                        <label for="fallback_msgs" class="form-label">Fallback Message(s)</label>
+                        <textarea class="form-control" name="fallback_msgs" rows="4">{{ settings.fallback_msgs }}</textarea>
+                    </div>
+
+                    <hr>
+
+                    <!-- CPA Links -->
+                    <h5 class="card-title mt-4">CPA Links</h5>
+                    <p class="form-text">Enter the CPA links to be sent to users. One link per line for random selection.</p>
+                    <div class="mb-3">
+                        <label for="cpa_links" class="form-label">CPA Link(s)</label>
+                        <textarea class="form-control" name="cpa_links" rows="4">{{ settings.cpa_links }}</textarea>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary mt-3">Save All Settings</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
